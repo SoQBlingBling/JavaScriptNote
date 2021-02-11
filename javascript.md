@@ -198,13 +198,17 @@ test(1)
 
 
 
-### 4.变量在内存中的存储与释放
+### 4.分支switch
 
-收集方式
-
-收集内容
-
-收集算法
+```js
+switch(判断的变量){
+    case 值 ：
+    xxxx  
+    break；
+    default：
+        xxx
+}
+```
 
 
 
@@ -294,9 +298,12 @@ var arr4 = Array.of(1,2,3)
 
 
 
-### 13.数组的遍历
+### 13.数组的方法
+
+#### 数组遍历
 
 ```js
+
 for of
 for(let 变量 of 数组){
     
@@ -310,9 +317,317 @@ for(let 变量 of 数组){
 })
 ```
 
+#### 数组增删
+
+```js
+arr.push(xxx)   向后追加
+arr.pop(xxx)    删除最后一项
+
+arr.shift()     删除第一项
+arr.unshift(xx) 添加第一项
+```
+
+#### 反转数组
+
+```js
+//会反转原数组
+arr.reverse()
+```
+
+#### 排序
+
+```js
+//重排原数组   
+
+arr.sort()
+//大小排序
+				// [a:数组中前一个元素，b：数组中后一个元素]
+arr.sort(function(a,b){
+      if(a>b){
+          //降序   a>b 放到前面  返回小于0的数字 
+          return -1
+      }else if(a<b){
+          //升序   a<b 放到后面 返回大于0的数字
+          return 1
+      }else {
+          //相等返回 0
+          return 0
+      }
+})
+```
+
+#### 连接数组
+
+```js
+//会产生一个新数组
+arr.concat(arr1)
+```
+
+#### 数组的裁切
+
+```js
+// 会产生新的值      前闭后开  如果想从头选到尾 只写开始
+arr.slice(分割开始的下标，分割结束的下标)
+```
+
+#### map
+
+```js
+arr.map(function(元素，下标，原数组){
+    
+})
+//和forEach区别就是会产生新的数组
+```
 
 
-### 14.构造函数
+
+#### reduce计算
+
+```js
+//计算结果  产生新的数据
+arr.reduce(function(上一次计算结果，当前变量到的数组元素，当前遍历到的索引，数组本身){})
+```
+
+
+
+#### 过滤数组
+
+```js
+//返回一个新的数组      当这个值返回为true 时才会将这个元素存入  这个数组
+arr.filter(function(元素，下标，数组){
+    return  true
+})
+```
+
+
+
+### 14.对象 
+
+#### 遍历对象所有的属性
+
+```js
+//方法一通过  keys   方法 
+var obj = {name:'张三',age:'20'}
+   Oject.keys(obj) //[name,age]
+//方法二通过  for in  方法
+for(键  in 对象){
+    
+}
+```
+
+#### 删除对象中的元素
+
+```js
+delete 对象.对象键
+```
+
+#### 构造函数
+
+```js
+ /*汽车制造  ===>    图纸 （protype） ------->  工厂（构造函数） ----------> 汽车 (实例)   
+ 注意构造函数首字母大写
+  */
+function User(name,age){
+    //this 所创建的对象所拥有的属性
+    this.name = name
+    this.age = age
+}
+var zs = new User('张三','20')
+
+```
+
+#### 函数的getters 和 setters
+
+
+
+```js
+书写一些逻辑然后再把值返回出来
+get:用一个变量的名字然后加一个变量的名字（新的变量）  注意他是一个函数
+ var user = {
+     firstName = '三'，
+     lastName = '张'，
+     get fullName(){
+         return lastName+firstName 
+     },
+        //如果只定义了get 那么他就是一个只读的属性  ，如果 给他设置上set 他就是一个可读可修改的值
+        //注意 set 这个函数只能接受一个形参 
+     set fullName(fullName){
+         var [lastName,firstName] = fullName.split(',');
+         this.lastName = lastName;
+         this.firstName = firstName;
+         
+     }
+ }
+ 	user.fullName = '李，四'
+	console.log(user.fullName) // 李四
+
+
+构造函数使用 getter 和 setter
+
+function User(name,position){
+    this.name = name ;
+    this.position = position;
+}
+
+var zs = new User('李四','web前端')
+Object.defineProperty('getter和setter的对象'，'定义的getter，和setter的名字'，{
+                      具体的getter 和setter 函数
+                      })
+Object.defineProperty('zs','init',{
+    get：function(){
+        return this.name+''+this.position
+    },
+    set：funciton(info){
+        let [name,position] = info.split(',')
+        this.name = name ;
+        this.position = position;
+    }
+})
+
+zs.info = '李四，后台开发'
+
+```
+
+#### 原型
+
+```js
+//如果一个函数作为了构造函数那么他new出来的对象会继承这个构造函数的原型
+  function User(){
+      this.init= function(){
+          console.log(this)
+      }
+  }
+  var zs = new User();
+//   zs.init()
+User.prototype.name='张三'
+console.log(zs.name)//张三
+
+//对象的原型
+```
+
+#### object.create
+
+```js
+ 可以让一个对象继承另一个对象
+ 新的对象可以拥有所继承的对象的所有属性 
+ 并且还可以拥有自己特有的属性 
+ 
+  var User = {
+     firstName = '三'，
+     lastName = '张'，
+  }
+  var zs = new User（）；
+  
+  var ls = Object.create(zs)
+  
+  
+  
+  
+  
+  
+  
+  
+  
+```
+
+
+
+#### 原型链
+
+```js
+ 每个对象的原型都有一个上层的原型 直到遇到null  
+ 这种链式继承下来的原型就构成了原型链
+ 
+ 获得prototype
+ 
+ var xx = Object.getPrototypeOf(对象)
+ 
+```
+
+
+
+#### 修改原型指向
+
+```js
+function User(){
+    
+}
+Object.setPrototypeOf(要修改的对象，要执向的原型)
+Object.setPrototypeOf(zs,User.prototype)
+```
+
+
+
+#### 值传递和引用传递
+
+```js
+array 和 object 引用传递 ，也就是说传递的是内存地址
+//数组
+function changeArray (arr){
+    arr[0] = 5
+}
+var arry = [1,2,3]
+changeArray(array)
+console.log(arry)//[5,2,3]
+
+//对象
+function changeObj(obj){
+    obj.title = 3;
+}
+var obj = {
+    title:1;
+}
+changeObj(obj);
+console.log(obj)//{ title:3}
+
+基本类型是值传递的 也就是说他的值是新的不会影响他之前的值					
+//字符串
+function testStr(str){
+    str = '123';
+}
+var str = '456'
+testStr
+conosole.log(str)//456
+```
+
+
+
+#### 修改this指向
+
+```js
+var emp = {
+    id:1,
+    name:'张三'，
+}
+
+   printInfo(dep1,dep2){
+    	console.log('姓名'+this.name)
+       console.log(dep1,dep2)
+	}     
+printInfo()// 姓名
+
+
+call
+//call(指向的对象，参数1，参数2，参数3.。。。。)
+printInfo.call(emp,'我是dep1','我是dep2')
+
+apply
+//apply(指向的对象，参数数组)
+printInfo.apply(emp,['我是deo1'，'我是dep2'])
+
+//bind与call是大致一样的 不同于前两项 返回了改变this 指向的新函数    
+//他不会立即执行
+bind
+
+var empprintInfo = printinof.bind(emp,'我是dep1','我是dep2')
+empprintInfo(); 
+```
+
+
+
+​					
+
+### 15.构造函数
 
 ```js
 　　定义：通过  new 函数名    来实例化对象的函数叫构造函数。任何的函数都可以作为构造函数存在。之所以有构造函数与普通函数之分，主要从功能上进行区别的，构造函数的主要 功能为 初始化对象，特点是和new 一起使用。new就是在创建对象，从无到有，构造函数就是在为初始化的对象添加属性和方法。构造函数定义时首字母大写（规范）。
@@ -325,7 +640,7 @@ for(let 变量 of 数组){
 
 
 
-### 15.柯里化
+### 16.柯里化
 
 ```js
 是把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数而且返回结果的新函数的技术。
@@ -343,7 +658,9 @@ function curryingAdd(x) {
 }
 ```
 
-#### 柯里化优势
+
+
+#### 17.柯里化优势
 
 ##### 1.参数复用
 
@@ -449,9 +766,174 @@ curry的一些性能问题你只要知道下面四点就差不多了：
 
 
 
-### 16.高阶函数
+### 18.高阶函数
 
 ```js
 　　高阶函数：英文叫Higher-order function。JavaScript的函数其实都指向某个变量。既然变量可以指向函数，函数的参数能接收变量，那么一个函数就可以接收另一个函数作为参数，这种函数就称之为高阶函数。
+```
+
+
+
+### 19.class
+
+es6中添加
+
+#### 1.创建一类
+
+```js
+class User{
+     //构造函数 必须通过constructor
+    constructor(name,age){
+        this.name = name;
+        this.age = age;
+    }
+}
+
+var zs = new User('张三'，20)
+```
+
+#### 2.成员对象
+
+```js
+class User{
+     //构造函数 必须通过constructor
+    constructor(name,age){
+        this.name = name;
+        this.age = age;
+    }
+    signIn(){
+        console.log(this.name+this.age)
+    }
+    get info(){
+        return this.name + '' + this.age
+    }
+    set info(info){
+       let [name,age] = info.split(' ')
+       this.name = name;
+        this.age = age;
+    }
+}
+
+var user = new User('张三'，20);
+console.log(user.name)//张三
+console.log(user.age)//20
+
+
+```
+
+#### 3.继承
+
+```js
+class Zs extends User{
+    constructor (name,age,work){
+        //相当于在使用父类中的本身 super 
+        super(name,age);
+        
+        this.work = work;
+        singin(){
+            super.sigIn();
+            console.log('额外的内容')
+        }
+    }
+}
+var zhangsan = new Zs（'zhangsan',20,'前端'）
+```
+
+#### 4.面向对象-成员变量（新的只有部分浏览器支持）
+
+```js
+ class User{
+     //成员变量只能初始化的时候给他一个值不好后面的处理 
+     age =20;
+     constructor(name){
+		this.name ='员工姓名'+name
+     }
+ }
+
+```
+
+
+
+#### 5.静态成员
+
+```js
+
+属于类但是不属于实例对象
+class Phone{
+    static name = '手机'; 
+}
+
+let nokia = new Phone();
+console.log(nokia.name)//undefined
+console.log(Phone.name)//手机
+```
+
+
+
+### 20.字符串
+
+#### 1.字符串转义
+
+```js
+str  = '你\'好'//你'好
+str  = '你\n好'// 你 换行 好
+str  ='你\t好' // 你    好
+
+```
+
+#### 2.字符串的方法
+
+```js
+str  = '你好光头强'；
+//返回指定位置的字符
+str.charAt(1) // 好
+
+//裁剪
+ str.slice(0,2) //你好
+str.slice(3)//头强   如果没有指定结束那么就直接到最后
+str.slice(0,-1) //你好光头
+str.slice(-3,-1)//好光头
+str.slice(4,1)//     如果开始大于结束就会返回一个空字符
+
+//裁剪2
+str.substring(0,2) //你好
+str.substring(0,-1) //    不能接受负数
+str.slice(4,1)//  好光头强   如果开始大于结束掉换位置
+
+//拼接
+var str1 = '你好'，
+var str2 = '世界'
+str1 + str2
+str1.concat（str2）
+
+```
+
+
+
+#### 2.模板字符串
+
+```js
+
+function user (name){
+    console.log(name)
+}
+user`lisi`
+```
+
+
+
+### 21.正则
+
+#### 1.书写
+
+```js
+
+var str = 'where when what';
+//字面值
+var re = /wh/
+//表达式
+var re2 = new RegExp('wh')
+console.log(re.exec(str))  //匹配到的结果
+conosle.log(re.text(re)) //返回布尔类型
 ```
 
