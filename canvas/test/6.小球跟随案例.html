@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style></style>
+  </head>
+  <body>
+    <canvas width="500" height="500" id="canvas"></canvas>
+    <script>
+      let canvas = document.getElementById("canvas");
+      let ctx = canvas.getContext("2d");
+
+      function Ball(x, y, r) {
+        this.x = x;
+        this.y = y;
+        this.r = r;
+        this.mx = parseInt(Math.random() * 10) - 5;
+        this.my = parseInt(Math.random() * 10) - 5;
+
+        this.color = RandomColor();
+        ballArr.push(this);
+      }
+      Ball.prototype.update = function () {
+        this.x += this.mx;
+        this.y += this.my;
+        this.r -= 0.3;
+        if (this.r <= 0) {
+          this.del();
+        }
+      };
+      Ball.prototype.del = function () {
+        for (var i = 0; i < ballArr.length; i++) {
+          if (ballArr[i] == this) {
+            ballArr.splice(i, 1);
+          }
+        }
+      };
+      Ball.prototype.render = function () {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+        ctx.closePath();
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      };
+
+      function RandomColor() {
+        var colorStr = "0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f";
+        var colorArr = colorStr.split(",");
+        var color = "#";
+        for (let i = 0; i < 6; i++) {
+          var RandomIndex = parseInt(Math.random() * colorArr.length);
+
+          color += colorArr[RandomIndex];
+        }
+
+        return color;
+      }
+      RandomColor();
+      canvas.addEventListener("mousemove", function (event) {
+        // console.log(event.offsetX)
+        new Ball(event.offsetX, event.offsetY, 30);
+      });
+      var ballArr = [];
+      setInterval(function () {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < ballArr.length; i++) {
+          ballArr[i].update();
+          if (ballArr[i]) {
+            ballArr[i].render();
+          }
+        }
+      }, 24);
+    </script>
+  </body>
+</html>

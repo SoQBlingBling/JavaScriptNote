@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <script type="text/javascript">
+      var ballArr = [];
+      var canvas = document.querySelector("#canvas");
+      var ctx = canvas.getContext("2d");
+      function Ball() {
+        this.x = parseInt(Math.random()*canvas.width)-15;
+        this.y = parseInt(Math.random()*canvas.height)-15;
+        this.mx = parseInt(Math.random() * 10) - 5;
+        this.my = parseInt(Math.random() * 10) - 5;
+        this.r = 15;
+        ballArr.push(this);
+        this.index = ballArr.length-1;
+      }
+      Ball.prototype.update = function(){
+        this.x += this.mx;
+        this.y += this.my
+        if(this.x<=this.r||this.x>=canvas.width-this.r){
+            this.mx = -this.mx
+        }
+        if(this.y<=this.r||this.y>=canvas.height-this.r){
+            this.my = -this.my
+        }
+      }
+
+      Ball.prototype.render = function(){
+        ctx.beginPath();
+        ctx.arc(this.x,this.y,this.r,0,Math.PI*2,false);
+        ctx.closePath();
+
+        ctx.fillStyle = 'pink';
+        ctx.fill();
+        for(var i = this.index; i<ballArr.length;i++){
+            if(Math.abs(ballArr[i].x-this.x)<100&&Math.abs(ballArr[i].y-this.y)<100){
+                ctx.strokeStyle='pink'
+                ctx.globalAlpha = 1;
+                ctx.beginPath();
+                ctx.moveTo(ballArr[i].x,ballArr[i].y);
+                ctx.lineTo(this.x,this.y);
+                ctx.closePath();
+                ctx.stroke();
+            }
+        }
+      }
+      for(let i = 0; i<5;i++){
+        new Ball()
+      }
+      
+      setInterval(function(){
+      
+          ctx.clearRect(0,0,canvas.width,canvas.height);
+        for(var i=0;i<ballArr.length;i++){
+            ballArr[i].update();
+            ballArr[i].render();
+        }
+      },25)
+      console.log(ballArr);
+    </script>
+  </body>
+</html>

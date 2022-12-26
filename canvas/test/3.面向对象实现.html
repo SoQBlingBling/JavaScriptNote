@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="canvas" width="500px" height="500px"></canvas>
+    <script>
+        let canvas = document.querySelector("#canvas");
+        let ctx = canvas.getContext("2d");
+
+        function Mycanvas(x, y, w, h, color) {
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
+            this.color = color;
+        }
+        Mycanvas.prototype.update = function () {
+            this.x++;
+        };
+        Mycanvas.prototype.render = function () {
+            ctx.fillStyle = this.color;
+
+            ctx.fillRect(this.x, this.y, this.w, this.h);
+        };
+        let can1 = new Mycanvas(0, 0, 100, 100, "pink");
+        can1.render();
+
+        setInterval(function () {
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+            can1.update();
+            can1.render();
+
+        }, 10);
+    </script>
+</body>
+
+</html>

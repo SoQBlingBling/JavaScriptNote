@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <script>
+      // 旋转
+      function draw() {
+        const canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        ctx.fillRect(20, 20, 300, 300);
+        ctx.globalCompositeOperation = "destination-out";
+        canvas.onmousedown = function (event) {
+            event.stopPropagation();
+          canvas.onmousemove = function (event) {
+            ctx.beginPath();
+            ctx.arc(event.offsetX, event.offsetY, 20, 0, 7, false);
+            ctx.stroke();
+            ctx.closePath();
+          };
+        };
+      }
+      draw();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,191 @@
+{
+  "main": {
+    "id": "952bd3e6796ca13d",
+    "type": "split",
+    "children": [
+      {
+        "id": "f65365a3a7da7932",
+        "type": "tabs",
+        "dimension": 53.923541247484906,
+        "children": [
+          {
+            "id": "f2b57b6a27900941",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "object.md",
+                "mode": "source",
+                "backlinks": false,
+                "source": true
+              }
+            },
+            "group": "929f38c96a34a37b"
+          }
+        ]
+      },
+      {
+        "id": "bd93196df9633566",
+        "type": "tabs",
+        "dimension": 46.076458752515094,
+        "children": [
+          {
+            "id": "b27b4a64134a8344",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "object.md",
+                "mode": "preview",
+                "backlinks": false,
+                "source": true
+              }
+            },
+            "group": "929f38c96a34a37b"
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "2e44f66581337eb3",
+    "type": "split",
+    "children": [
+      {
+        "id": "aa261cdd9a610366",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0d9a8ef5d4669b78",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "56eaf37fd3240adc",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "#array",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "84cdf4768144f2ad",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "right": {
+    "id": "095f21f28b375d5d",
+    "type": "split",
+    "children": [
+      {
+        "id": "e5d987960df6004d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c54583576687c578",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "object.md"
+              }
+            }
+          },
+          {
+            "id": "23c1797031f507ce",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "object.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "87336e483c642476",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "object.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": false
+              }
+            }
+          },
+          {
+            "id": "9da3af6912b0e351",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "07f1e45342132c62",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "object.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 233.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false
+    }
+  },
+  "active": "f2b57b6a27900941",
+  "lastOpenFiles": [
+    "object.md",
+    "array.md",
+    "README.md",
+    "未命名.md",
+    "demo/2.ts中js类型/node_modules/rxjs/README.md"
+  ]
+}

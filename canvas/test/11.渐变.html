@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas width="500" height="500"></canvas>
+    <script>
+      let canvas = document.querySelector("canvas");
+      let ctx = canvas.getContext("2d");
+      // let linearGradient = ctx.createLinearGradient(20,00,20,220);
+      // linearGradient.addColorStop(0,'red');
+      // linearGradient.addColorStop(0.5,'pink');
+      // linearGradient.addColorStop(1,'gold');
+      // ctx.fillStyle = linearGradient;
+      // ctx.fillRect(20,20,200,200)
+
+      // ctx.fillRect();
+      function draw() {
+        // Create gradients
+        const radgrad = ctx.createRadialGradient(50, 50, 10, 50, 50, 30);
+        radgrad.addColorStop(0, "red");
+        radgrad.addColorStop(0.4, "blue");
+        radgrad.addColorStop(0.8, "green");
+
+        radgrad.addColorStop(1, 'rgba(228, 199, 0, 0.6)');
+
+
+        const radgrad2 = ctx.createRadialGradient(105, 105, 20, 112, 120, 50);
+        radgrad2.addColorStop(0, "#FF5F98");
+        radgrad2.addColorStop(0.75, "#FF0188");
+        radgrad2.addColorStop(1, "rgba(255, 1, 136, 0)");
+
+        const radgrad3 = ctx.createRadialGradient(95, 15, 15, 102, 20, 40);
+        radgrad3.addColorStop(0, "#00C9FF");
+        radgrad3.addColorStop(0.8, "#00B5E2");
+        radgrad3.addColorStop(1, "rgba(0, 201, 255, 0)");
+
+        const radgrad4 = ctx.createRadialGradient(0, 150, 50, 0, 140, 90);
+        radgrad4.addColorStop(0, "#F4F201");
+        radgrad4.addColorStop(0.8, "#E4C700");
+        radgrad4.addColorStop(1, "rgba(228, 199, 0, 0)");
+
+        // draw shapes
+        // ctx.fillStyle = radgrad4;
+        // ctx.fillRect(0, 0, 150, 150);
+        // ctx.fillStyle = radgrad3;
+        // ctx.fillRect(0, 0, 150, 150);
+        // ctx.fillStyle = radgrad2;
+        // ctx.fillRect(0, 0, 150, 150);
+        ctx.fillStyle = radgrad;
+        ctx.fillRect(0, 0, 150, 150);
+      }
+    //   draw()
+
+
+    function draw2() {
+
+
+  // Create gradients
+  const conicGrad1 = ctx.createConicGradient(1, 62, 75);
+  conicGrad1.addColorStop(0, '#A7D30C');
+  conicGrad1.addColorStop(1, '#fff');
+
+  const conicGrad2 = ctx.createConicGradient(0, 187, 75);
+  // we multiple our values by Math.PI/180 to convert degrees to radians
+  conicGrad2.addColorStop(0, 'black');
+  conicGrad2.addColorStop(0.3, 'black');
+  conicGrad2.addColorStop(0.3, 'white');
+  conicGrad2.addColorStop(0.5, 'white');
+  conicGrad2.addColorStop(0.5, 'black');
+  conicGrad2.addColorStop(0.75, 'black');
+  conicGrad2.addColorStop(0.75, 'white');
+  conicGrad2.addColorStop(1, 'white');
+
+  // draw shapes
+  ctx.fillStyle = conicGrad1;
+  ctx.fillRect(12, 25, 100, 100);
+  ctx.fillStyle = conicGrad2;
+  ctx.fillRect(137, 25, 100, 100);
+}
+draw2()
+    </script>
+  </body>
+</html>

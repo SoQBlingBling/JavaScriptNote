@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <script>
+        // 旋转
+      function draw() {
+        const ctx = document.getElementById("canvas").getContext("2d");
+        ctx.scale(2, 4);
+        ctx.fillRect(20,20,50,50)
+      ctx.translate(40,40)
+      ctx.rotate((Math.PI/180)*70)
+      ctx.translate(-40,-40)
+
+        ctx.fillStyle = 'pink';
+
+        ctx.fillRect(20,20,40,40)
+    }
+      draw()
+    </script>
+  </body>
+</html>
