@@ -74,7 +74,7 @@ tsconfig.json:
 //空检验
 "strictNullChecks":true
 ```
-### 8.类型
+ ### 8.类型
  注意 js 和 ts 不能同时打开不然会产生会出现有关函数重复实现的错误 
 **❗ TypeScript中的核心基元类型都是小写的！**
 
@@ -96,7 +96,7 @@ tsconfig.json:
 |  [[object#^621a8c \| 函数]] |   ()=>  |  当变量声明为函数时|
 |  [[object#^38622d \| unknown]]  |       let a:unknown |   当将一个未知类型的值赋值给已知类型的变量 |
 | [[object#^cfd780 \| never]] |  let a:never  | 表示永远不存在的值的类型|
- #对象 ^3ff302
+ #对象 ^3ff302     
 ```ts
 /* 隐式 */
 let person = {
@@ -964,33 +964,19 @@ let testInputDE :TestDE = 'srtring'
 type orTest = Bired | Cat
 
 function speedFn(n: orTest) {
-
     if ('runSpeed' in n) {
-
         console.log(n.runSpeed)
-
     }
-
     let speed: number;
-
     switch (n.type) {                       // 函数中，必须要有类型判断，否则将无法正常使用
-
         case "bired":
-
             speed = n.flySpeed;
-
             break;
-
         case "cat":
-
             speed = n.runSpeed;
-
             break;
-
     }
-
     console.log(`${n.type} - SPEED: ${speed}`);
-
 };
 speedFn({ type: 'cat', runSpeed: 666 });
 ```
@@ -1010,4 +996,385 @@ buttonA.value = 'xxx';
 const buttonB = document.querySelector("#testInput")! as HTMLInputElement;
 buttonB.value = 'yyy';
 ```
+#### 4. interface不确定属性名称构建 
 
+```ts
+interface ErrorContainer {
+    // 设置键值为字符串类型  设置值为字符串类型
+    [prop:string]:string
+
+}
+let errorType:ErrorContainer ={
+    email:'not a valid email',
+    userName:'必须以大写开头'
+}
+```
+#### 5.重载函数
+```ts
+/* 函数重载：告诉ts什么样的赋值给什么样的类型结果 */
+
+// a) 目的: 告诉ts函数什么样的赋值给什么样的类型结果，防止加工函数然后值时报错
+
+function testLoadFunction(a: string, b: string): string; // 函数重载
+function testLoadFunction(a: number, b: number): number; // 函数重载
+function testLoadFunction(a: number, b: string): string;//函数重载
+function testLoadFunction(a: string, b: number): string;//函数重载
+
+function testLoadFunction(a: number | string, b: number | string) {// 原始函数
+    if (typeof a === 'string' || typeof b === 'string') {
+        return a.toString() + b.toString();
+    }
+    return a + b;
+}
+const result = testLoadFunction('ztaetr', 'xxx');
+console.log(result.split(''))       // 报错: 如果没有"函数重载"，那么将报错
+```
+#### 6."?"可选符号
+```ts
+* "?"可选符号 */
+// a) 函数中: 告诉ts为可选参数
+// b) 索引变量中: 告诉ts我也不知是否能索引成功
+// c) 目的: 告诉ts不要因为不确定变量来报错
+const axiosUserDate = {
+    id: 'xxx',
+    name: 'zt',
+    // job: { title: 'ceo', des: 'testxxx' }
+}
+console.log( axiosUserDate?.job?.title);
+//"?": 保证索引数据不存在js也能正常运行，并返回undefind，但ts会提示错误
+```
+
+#### 7."??"双重可选符
+```ts
+// "??"双重可选符，“||”也可以做到其功能，只是“特殊点”不适合
+
+// a) 目的: 给变量备用数据
+
+// b) xx ?? bb: 如果xx值不为 undefined 或者 null，则返回真实数据，否则返回bb准备好的数据;
+
+const testInputDate = '';
+
+const getDate = testInputDate ?? '备用数据';// 备用数据
+
+console.log(getDate);
+```
+
+### 13.泛型
+#### 1.Generic | 通用类型 | 泛型类型 
+
+a) 目的: 最大的用处是，使函数可以自由的传入/加工"数据"，ts不在报错，以及更加方便的约束数据类型
+
+b) 内置通用类型函数:
+
+c) 自定义通用类型函数:
+
+#### 2.通用类型函数function
+```ts
+function merge<T,U> (ob1:T,ob2:U){
+    return {...ob1,...ob2}
+}
+let testMerge = merge({name:'SoQ'},{age:24});
+
+testMerge.age
+```
+#### 3.类型约束
+```ts
+//泛型类型约束
+
+  // a) 通用类型约束：多种类型数据约束<T extends xxx | yyy | ccc >
+
+function mergeObj<T extends object, U extends object>(ob1: T, ob2: U) {
+    return { ...ob1, ...ob2 }
+}
+
+interface LengthExtends {
+    length: number
+}
+function testExtendsFunction<T extends LengthExtends>(inputString: T) {// 通用类型继承属性
+    let resultDes: string = '';
+    if (inputString.length === 1) { // 如果没有继承属性length，将报错
+        resultDes = '长度为1';
+    }
+    else if (inputString.length > 1) {
+       resultDes = `长度为${inputString.length}`;
+    }
+    return [inputString, resultDes];
+}
+console.log(
+    testExtendsFunction('this there')
+);
+/*
+keyof约束
+*/
+
+function testKeyOf<T extends object,U extends keyof T>(obj:T,key:U){
+    return obj[key]
+}
+console.log(
+    testKeyOf({name:"SOQ"},'name')  
+);
+```
+#### 4.泛型类
+```ts
+// 泛型类
+
+class DataStorage<T extends string | number>{
+    private data:T[]=[];
+    addItem(item:T){
+        this.data.push(item)
+    }
+    removeItem(item:T){  this.data.splice(this.data.indexOf(item),1)
+    }
+    printData(){
+        console.log(this.data);    
+    }
+}
+let textStorage = new DataStorage()
+textStorage.addItem('max')
+textStorage.addItem('manu')
+textStorage.removeItem('max')
+textStorage.printData()
+textStorage.addItem(1)
+```
+#### 5.关键字
+```ts
+// 关键字 partial
+   // a) 原理: 参数类型变为可选
+   // b) 报错: 要求输出结果xxx时：Partial< xxx >要配合as，将结果值as转换为xxx类型进行输出，否则也将报错
+   // c) 无要求输出结果，则无需as转换
+interface Doc {
+    title:string,
+    size:number,
+    date:Date
+}
+/*
+ 相当于: interface Doc { id?: number; age?: number; name?: string; }
+*/ 
+function Mydoc(title:string,size:number,date:Date):Partial<Doc>{
+    let mydoc: Partial<Doc> = {};
+    mydoc.title = title;
+    mydoc.size = size;
+    mydoc.date = date;
+    return mydoc as Doc
+}
+
+// 关键字 Readonly
+// 只能读取无法进行操作
+let arr:Readonly <string[]> = ['max','manu'];
+
+// arr.push('ail')
+```
+
+#### 6."通用类型" 与 "联合类型" 区别 
+
+```ts
+
+    a) 通用类型：在class中或者函数中，一开始就抉择数据类型
+         0. extends - 约束通用类型的目的:  约束允许您缩小可能在通用函数等中使用的具体类型。
+    b) 联合类型: 在class中或者函数中，一开始不能统一抉择数据类型
+    c) 通用类型更加灵活，如上方的 const testNewControlArray_string = new TestControlArray<string>(), 如果只使用联合类型是很难实现这一步的。
+    d) 何时使用通用类型: 如果您拥有一个实际上可以与其他多种可能的类型一起使用的类型（例如，发出不同类型数据的对象）- 官方语。
+```
+
+### 14.Decorators | 装饰器 | Meta-Programming
+#### tips：ts中的new（）
+
+new()描述了typescript中的构造函数签名。这意味着它描述了构造函数的形状。  
+例如，取{new(): T; }。你是对的它是一种类型。它是类的类型，其构造函数不带参数。请考虑以下示例
+
+
+```js
+function create< T >(c: { new(): T; } ): T {  
+    return new c();  
+}
+
+/*
+这意味着函数create接受一个参数，其构造函数不带参数并返回类型为T的实例。
+*/
+
+
+function create< T >(c: { new(a: number): T; } ): T
+
+/*
+这意味着create函数接受一个参数，其构造函数接受一个数字a并返回一个类型为T的实例。  
+解释它的另一种方法可以是，以下类的类型
+*/
+
+
+class Test {  
+    constructor(a: number){  
+   }  
+}
+/*
+将是{new(a: number): Test}
+*/
+```
+
+#### 1.装饰器创建
+
+```ts
+/*
+a）当类被定义时就会 装饰器就会执行
+b)  实例化时不会执行
+c)通过@符来给类或者构造函数绑定装饰器
+*/
+function myFirst (constructor:Function){
+    console.log(constructor)
+}
+@myFirst
+class SayHi{
+
+    constructor(){
+        console.log("hi");
+    }
+}
+```
+#### 2. 装饰器工厂
+
+```ts
+/*
+a) constructor: Function: 此参数代表，抓取当前文件中的class代码
+b) 注意: constructor参数名称可随意修改
+*/
+function Logger(locstion: string) {
+    return function (constructor: Function) {
+        console.log(locstion);
+        console.log(constructor);
+
+    }
+}
+@Logger('hello')
+class Person {
+    constructor() {
+
+    }
+}
+```
+
+#### 各个装饰器入参
+```ts
+// 属性装饰器
+/*
+a) 注册类时进行执行
+b) 一般有两个参数
+*/ 
+/**
+ *
+ *
+ * @param {*} tag    类的原型
+ * @param {(string | symbol)} propertyName   属性名
+ */
+function log(tag:any,propertyName:string | symbol){
+    console.log(tag,propertyName);
+    
+}
+// 访问器装饰器 
+/*
+
+普通函数的target:类的prototype原型
+静态函数的target:类的构造函数
+
+configurable ： 设置属性是否可以删除或编辑属性值
+
+enumerable ：设置属性是否可以枚举，即是否允许遍历
+
+get ：   获取属性的值
+
+set ：   设置属性的值
+
+*/ 
+/**
+ *
+ *
+ * @param {*} tag  类的原型
+ * @param {string} name 方法名
+ * @param {PropertyDescriptor} decorator   属性描述（配置）
+ */
+function log1(tag:any,name:string,decorator:PropertyDescriptor){
+    console.log('---------访问装饰器---------');
+    
+    console.log(tag);
+    console.log(name)
+    console.log(decorator);
+}
+
+//  方法装饰器
+/*
+decorator：
+	configurable ： 设置属性是否可以删除或编辑属性值
+	
+	enumerable  ： 设置属性是否可以枚举，即是否允许遍历
+	
+	value  ： 设置属性默认值
+	
+	writable ： 设置属性是否能够修改
+
+*/ 
+/**
+ *
+ *
+ * @param {*} tag  类的原型
+ * @param {string} name 方法名
+ * @param {PropertyDescriptor} decorator   属性描述（配置）
+ */
+function log3(
+    tag:any,
+    name:string,
+    decorator:PropertyDescriptor
+){
+    console.log('---------方法装饰器---------');
+    console.log(tag);
+    console.log(name);
+    console.log(decorator);
+    
+}
+
+// 参数装饰器
+/**
+ *
+ * @param {*} tag    类的原型
+ * @param {string} name    方法名  
+ * @param {number} position    参数所在的位置 如果是第一个参数那么索引就是0
+ * 
+ */
+function log4(tag:any,name:string,position:number){
+    console.log('---------参数装饰器----------');
+    console.log(tag);
+    console.log(name);
+    console.log(position);
+
+}
+class Product{
+    @log
+    title:string;
+    price:number;
+    @log1
+    set setPrice(val:number){
+        if(val>0){
+            this.price = val;
+        }else{
+            throw new Error('价格不能为负数')
+        }
+    }
+    constructor(title:string,p:number){
+        this.title = title;
+        this.price = p;
+    }
+    @log3
+    getPrice(@log4 tax:number){
+        return this.price * tax
+    }
+
+}
+
+// 多个装饰器事 渲染顺序
+/* 
+a) 先从, 自上到下执行装饰器: Logger Start --> WithTemplate Start
+b) 在从装饰器内部return函数, 自下而上执行: WithTemplate Function --> Logger Function
+c)  0. 类装饰器——优先级 4 
+    1. 方法装饰器——优先级 2 
+    2. 访问器或属性装饰器——优先级 3
+    3. 参数装饰器——优先级 1 
+    4. 如果同一个类型的装饰器有多个，总是先执行后面的装饰器。
+*/
+```

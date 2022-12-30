@@ -4,12 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "f65365a3a7da7932",
+        "id": "0a329a17bd320092",
         "type": "tabs",
-        "dimension": 53.923541247484906,
         "children": [
           {
-            "id": "f2b57b6a27900941",
+            "id": "d1c9b92c6b14a845",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -20,17 +19,16 @@
                 "source": true
               }
             },
-            "group": "929f38c96a34a37b"
+            "group": "c72fe38c9a341674"
           }
         ]
       },
       {
-        "id": "bd93196df9633566",
+        "id": "1a482510a97e8b79",
         "type": "tabs",
-        "dimension": 46.076458752515094,
         "children": [
           {
-            "id": "b27b4a64134a8344",
+            "id": "0a21ab3462af5652",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -41,7 +39,7 @@
                 "source": true
               }
             },
-            "group": "929f38c96a34a37b"
+            "group": "c72fe38c9a341674"
           }
         ]
       }
@@ -72,7 +70,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "#array",
+                "query": "tag:#类型约束",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -124,7 +122,7 @@
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
-                "showSearch": false,
+                "showSearch": true,
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
@@ -139,7 +137,7 @@
               "state": {
                 "file": "object.md",
                 "linksCollapsed": false,
-                "unlinkedCollapsed": false
+                "unlinkedCollapsed": true
               }
             }
           },
@@ -180,12 +178,17 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "f2b57b6a27900941",
+  "active": "d1c9b92c6b14a845",
   "lastOpenFiles": [
+    "demo/8.泛型/src/test.ts",
     "object.md",
-    "array.md",
-    "README.md",
-    "未命名.md",
-    "demo/2.ts中js类型/node_modules/rxjs/README.md"
+    "demo/7.ts高级/src/test.ts",
+    "demo/8.泛型/src/test.ts^keyof类型约束.md",
+    "demo/7.ts高级/node_modules/serve-index/node_modules/debug/CHANGELOG.md",
+    "demo/2.ts类型/test.ts",
+    "demo/2.ts类型/test.js",
+    "doc/ws.md",
+    "demo/5.模块/node_modules/tfunk/README.md",
+    "Pasted image 20221227142432.png"
   ]
 }

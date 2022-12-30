@@ -1,0 +1,10 @@
+{
+  "id": "ts-as-md-obsidian",
+  "version": "0.0.1",
+  "description": "在ob中查看编辑ts文件",
+  "name": "ts as md",
+  "author": "SQ",
+  "authorUrl": "https://github.com/danieltomasz",
+  "isDesktopOnly": false,
+  "minAppVersion": "0.10.12"
+}
