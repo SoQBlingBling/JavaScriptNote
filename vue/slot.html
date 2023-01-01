@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <my-child>
+       
+            <template #head='age'>
+                我是头部{{age.age}}
+            </template>
+            <template v-slot:foot>
+                我是脚部
+            </template>
+
+        </my-child>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var myChild = {
+            template: `<div>
+         <slot name='head' :age='age'>123</slot>
+         <slot name='foot'></slot>
+            </div>`,
+            data() {
+                return {
+                    age: 20
+                }
+            }
+        }
+        var app = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            components: {
+                myChild
+            }
+        })
+    </script>
+</body>
+
+</html>

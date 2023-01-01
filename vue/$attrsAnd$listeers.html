@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <mychild :date='date' @addInfo="changemsg" v-on='$listeners'></mychild>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script >
+        var mychild = {
+            template:`<div>
+            {{date}}
+             子组件
+            </div>`,
+            inheritAttrs:'false',
+            props:{
+                date:{
+                    type:String
+                }
+            },
+            mounted() {
+                console.log(this.$attrs);
+                // console.log(this.$listeners.addinfo);
+                this.$listeners.addinfo() //将会执行
+            },
+        }
+        new Vue({
+            el:'#app',
+            data:{
+                date:'2020.05.28'
+            },
+            components:{
+                mychild
+            },
+            methods:{
+                changemsg(){
+                    console.log('change this');
+                }
+            }
+        })
+    </script>
+</body>
+</html>

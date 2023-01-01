@@ -1,0 +1,28 @@
+{
+  "name": "webpackjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.4",
+    "babel-loader": "^8.2.2",
+    "core-js": "^3.14.0",
+    "eslint": "^7.28.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-webpack-plugin": "^2.5.4",
+    "html-webpack-plugin": "^5.3.1",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.2"
+  },
+  "eslintConfig": {
+    "extends": "airbnb-base"
+  }
+}

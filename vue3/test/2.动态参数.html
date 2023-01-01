@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .red{
+            background-color: red;
+        }
+        .green{
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <p :[flag]="className">
+            111
+        </p>
+        <button @click = 'changeBgc'>
+            change
+        </button>
+    </div>
+    <script src="vue3.js"></script>
+    <script>
+         var app = {
+            data(){
+               return{
+                flag:'class',
+                className:'red'
+               }
+            },
+            methods: {
+                changeBgc(){
+                    
+                     if(this.className == 'green'){
+                        this.className = 'red'
+                     }else{
+                        this.className = 'green'
+
+                     }
+                }
+            },
+         };
+         Vue.createApp(app).mount('#app')
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+
+        <mychild></mychild>
+       
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var mychild = {
+            template:`<div>{{prodata}}子组件<button @click= changetext></button></div>`,
+            inject:['prodata'],
+            methods:{
+                changetext(){
+                    this.prodata = '不好'
+                }
+            }
+        }
+        new Vue({
+            el:'#app',
+            provide(){
+                return{
+                    prodata:'你好'
+                }    
+            },
+            data:{
+
+            },
+            components:{
+                mychild
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <p>{{reverMsg}}</p>
+      <p>{{reverMsg}}</p>
+      <p>{{reverMsg}}</p>
+      <p>{{reverMsg}}</p>
+      <p>{{reverMsg}}</p>
+      <button @click="msg = '你好'">change Msg</button>
+      <button @click="reverMsg = '你好世界'">change Msg</button>
+
+    </div>
+    <script src="vue3.js"></script>
+    <script>
+      var app = {
+        data() {
+          return {
+            msg: "hello word",
+          };
+        },
+        computed: {
+          reverMsg: {
+            // return this.msg.split('').reverse().join('')
+            set(newValue) {
+              console.log(newValue);
+            },
+            get() {
+              console.log("get方法执行了一次");
+              return this.msg.split("").reverse().join("");
+            },
+          },
+        },
+      };
+      Vue.createApp(app).mount("#app");
+    </script>
+  </body>
+</html>
