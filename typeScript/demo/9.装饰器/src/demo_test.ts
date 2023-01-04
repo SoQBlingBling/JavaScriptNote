@@ -4,33 +4,38 @@ interface ValidatorConfig {
     [property: string]: {
         [validatableProp: string]: string[]; //required positive
     }
+   
 }
 
 const registered: ValidatorConfig = {}
 
 function Required(targ: any, propName: string) {
+    console.log( registered,'此处打印为变量校验方法',propName);
     registered[targ.constructor.name] = {
         ...registered[targ.constructor.name],
-        [propName]: ['required']
+        // [propName]: ['require']
+        [propName]: [...(registered[targ.constructor.name]?.[propName]??[]),'require']
     };
-    console.log(registered[targ.constructor.name]);
+    console.log([...(registered[targ.constructor.name]?.[propName]??[]),'require']);
 }
 function positiveNumber(targ: any, propName: string) {
     registered[targ.constructor.name] = {
         ...registered[targ.constructor.name],
-        [propName]: ['positive']
+        // [propName]: ['positive']
+        [propName]: [...(registered[targ.constructor.name]?.[propName] ?? []), 'positive']
     };
-    console.log(registered[targ.constructor.name]);
+    console.log( [...(registered[targ.constructor.name]?.[propName] ?? []), 'positive']);
+
 }
 function validate(obj: any) {
     const objValidatorConfig = registered[obj.constructor.name];
-    console.log(Boolean(objValidatorConfig), objValidatorConfig)
+    console.log(Boolean(objValidatorConfig), obj)
     if (!objValidatorConfig) {
         return true
     }
     let isValid = true
     for (const prop in objValidatorConfig) {
-
+        console.log(prop)
         for (const validator of objValidatorConfig[prop]) {
             console.log(validator)
             switch (validator) {

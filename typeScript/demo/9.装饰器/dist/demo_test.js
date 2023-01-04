@@ -11,21 +11,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 console.log('----------表单验证demo------------');
 const registered = {};
 function Required(targ, propName) {
-    registered[targ.constructor.name] = Object.assign(Object.assign({}, registered[targ.constructor.name]), { [propName]: ['required'] });
-    console.log(registered[targ.constructor.name]);
+    var _a, _b, _c, _d;
+    console.log(registered, '此处打印为变量校验方法', propName);
+    registered[targ.constructor.name] = Object.assign(Object.assign({}, registered[targ.constructor.name]), { 
+        // [propName]: ['require']
+        [propName]: [...((_b = (_a = registered[targ.constructor.name]) === null || _a === void 0 ? void 0 : _a[propName]) !== null && _b !== void 0 ? _b : []), 'require'] });
+    console.log([...((_d = (_c = registered[targ.constructor.name]) === null || _c === void 0 ? void 0 : _c[propName]) !== null && _d !== void 0 ? _d : []), 'require']);
 }
 function positiveNumber(targ, propName) {
-    registered[targ.constructor.name] = Object.assign(Object.assign({}, registered[targ.constructor.name]), { [propName]: ['positive'] });
-    console.log(registered[targ.constructor.name]);
+    var _a, _b, _c, _d;
+    registered[targ.constructor.name] = Object.assign(Object.assign({}, registered[targ.constructor.name]), { 
+        // [propName]: ['positive']
+        [propName]: [...((_b = (_a = registered[targ.constructor.name]) === null || _a === void 0 ? void 0 : _a[propName]) !== null && _b !== void 0 ? _b : []), 'positive'] });
+    console.log([...((_d = (_c = registered[targ.constructor.name]) === null || _c === void 0 ? void 0 : _c[propName]) !== null && _d !== void 0 ? _d : []), 'positive']);
 }
 function validate(obj) {
     const objValidatorConfig = registered[obj.constructor.name];
-    console.log(Boolean(objValidatorConfig), objValidatorConfig);
+    console.log(Boolean(objValidatorConfig), obj);
     if (!objValidatorConfig) {
         return true;
     }
     let isValid = true;
     for (const prop in objValidatorConfig) {
+        console.log(prop);
         for (const validator of objValidatorConfig[prop]) {
             console.log(validator);
             switch (validator) {
