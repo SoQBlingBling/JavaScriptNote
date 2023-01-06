@@ -8,12 +8,22 @@
  *          i)提交：通过装饰器修改this的指向
  *          ii)校验：在提交中实现校验 通过接口限制输入框输入的内容  通过if判断返回所取到的值
  *          iii)清空：在提交完成无误之后进行清空
- * b) 创建class获取列表的section
+ *  b) 创建class获取列表的section
  *      1)通过importNode 复制template中的html元素
  *      2)通过insertAdjacentElement 将元素追加在#app内部末尾（beioforeend ）
  *      3)在类中去修改 template内容 分别赋值不同的id
+ *  c) 处理any类型的变量 
+ * 
  * 
  * */
+
+// 项目中使用的类型
+enum listStatus { active, finished }
+class ProjectType {
+    constructor(public id: string, public title: string, public description: string, public poeple: number, public status: listStatus) {
+
+    }
+}
 
 // 验证输入内容接口
 interface validatable {
@@ -30,7 +40,8 @@ interface validatable {
     // 限制内容最小值   为选填内容
     min?: number;
 }
-// 
+
+// 对用户输入的字段进行校验
 function validata(validatableInput: validatable) {
     let isValid = true;
     // 判断是否为必填项
@@ -71,15 +82,19 @@ function autoBind(tag: any, methodName: string, descriptor: PropertyDescriptor) 
     }
     return adjDescriptor
 }
+
+type Listener = (item: ProjectType[]) => void
+
+
 // 收集用户输入的数据
 class ProjectStatus {
-    private listeners:any[] = [];
-    private projects: any[] = [];
+    // 保存
+    private listeners: Listener[] = [];
+    // 用户输入的内容
+    private projects: ProjectType[] = [];
+    // 当前类
     private static instance: ProjectStatus;
-    private constructor() {
-
-
-    }
+    private constructor() { }
     static getInstance() {
         if (this.instance) {
             return this.instance;
@@ -87,20 +102,24 @@ class ProjectStatus {
         this.instance = new ProjectStatus
         return this.instance
     }
-    addProject(title: string , description: string, people: number) {
-        const newProject = {
+    addProject(title: string, description: string, people: number) {
+        const newProject = new ProjectType(
+            Math.random().toString(),
             title,
             description,
-            people,
-            id: Math.random().toString()
-        }
+            +people,
+            listStatus.active
+        )
+
         this.projects.push(newProject)
-        for(const lisener of this.listeners){
+        console.log(this.projects, ' this.projects');
+
+        for (const lisener of this.listeners) {
             // 通过slice 进行深拷贝   不修改原数组
-            lisener(this.projects.slice())           
+            lisener(this.projects.slice())
         }
     }
-    addLisener(lisenerFn:Function){
+    addLisener(lisenerFn: Listener) {
         this.listeners.push(lisenerFn);
     }
 }
@@ -113,7 +132,8 @@ class ProjectList {
     tempalteEl: HTMLTemplateElement;
     hostEL: HTMLDivElement;
     element: HTMLElement;
-    assignedProjects:any[] ;
+    // 存储的用户当前输入的内容
+    assignedProjects: any[];
     constructor(private type: "active" | "finished") {
         //tempalete 标签
         this.tempalteEl = document.getElementById('project-list')! as HTMLTemplateElement;
@@ -124,9 +144,16 @@ class ProjectList {
         // 获取到 form
         this.element = importNode.firstElementChild as HTMLElement;
         console.log(this.element)
-        this.assignedProjects =[]
+        this.assignedProjects = []
         this.element.id = `${this.type}_project`;
-        projectState.addLisener((projects:any)=>{
+        projectState.addLisener((projects:ProjectType[]) => {
+            let relevanProjects  =  projects.filter(prj=>{
+                if(this.type =='active'){
+
+                 return prj.status == listStatus.active
+                }
+                return  prj.status == listStatus.active
+            })
             this.assignedProjects = projects;
             this.renderProjects()
         })
@@ -143,12 +170,10 @@ class ProjectList {
         this.element.querySelector('ul')!.id = listId;
         this.element.querySelector('h2')!.textContent = `${this.type}_列表`
     }
-    private renderProjects(){
+    // 根据用户输入的内容渲染列表
+    private renderProjects() {
         const listEl = document.querySelector(`#${this.type}_list`)!;
-
-        
-        for(const item of this.assignedProjects){
-            console.log(item);
+        for (const item of this.assignedProjects) {
             const listItem = document.createElement('li');
             listItem.textContent = item.title;
             listEl.appendChild(listItem)
@@ -194,7 +219,7 @@ class ProjectInput {
 
     }
     // 获取输入框的值
-    private getUserVal():[string,string,number] |void {
+    private getUserVal(): [string, string, number] | void {
         // 获取 title、 people 、 Description 的值
         const titleVal = this.titleInputEl.value;
         const peopleVal = this.peopleInputEl.value;

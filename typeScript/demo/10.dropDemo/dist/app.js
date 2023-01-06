@@ -8,10 +8,12 @@
  *          i)提交：通过装饰器修改this的指向
  *          ii)校验：在提交中实现校验 通过接口限制输入框输入的内容  通过if判断返回所取到的值
  *          iii)清空：在提交完成无误之后进行清空
- * b) 创建class获取列表的section
+ *  b) 创建class获取列表的section
  *      1)通过importNode 复制template中的html元素
  *      2)通过insertAdjacentElement 将元素追加在#app内部末尾（beioforeend ）
  *      3)在类中去修改 template内容 分别赋值不同的id
+ *  c) 处理any类型的变量
+ *
  *
  * */
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -20,7 +22,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-// 
+// 项目中使用的类型
+var listStatus;
+(function (listStatus) {
+    listStatus[listStatus["active"] = 0] = "active";
+    listStatus[listStatus["finished"] = 1] = "finished";
+})(listStatus || (listStatus = {}));
+class ProjectType {
+    constructor(id, title, description, poeple, status) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.poeple = poeple;
+        this.status = status;
+    }
+}
+// 对用户输入的字段进行校验
 function validata(validatableInput) {
     let isValid = true;
     // 判断是否为必填项
@@ -62,7 +79,9 @@ function autoBind(tag, methodName, descriptor) {
 // 收集用户输入的数据
 class ProjectStatus {
     constructor() {
+        // 保存
         this.listeners = [];
+        // 用户输入的内容
         this.projects = [];
     }
     static getInstance() {
@@ -73,13 +92,9 @@ class ProjectStatus {
         return this.instance;
     }
     addProject(title, description, people) {
-        const newProject = {
-            title,
-            description,
-            people,
-            id: Math.random().toString()
-        };
+        const newProject = new ProjectType(Math.random().toString(), title, description, +people, projectState.type);
         this.projects.push(newProject);
+        console.log(this.projects, ' this.projects');
         for (const lisener of this.listeners) {
             // 通过slice 进行深拷贝   不修改原数组
             lisener(this.projects.slice());
@@ -123,6 +138,7 @@ class ProjectList {
         this.element.querySelector('ul').id = listId;
         this.element.querySelector('h2').textContent = `${this.type}_列表`;
     }
+    // 根据用户输入的内容渲染列表
     renderProjects() {
         const listEl = document.querySelector(`#${this.type}_list`);
         for (const item of this.assignedProjects) {
